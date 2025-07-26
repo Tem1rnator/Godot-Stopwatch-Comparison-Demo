@@ -1,0 +1,170 @@
+[gd_scene load_steps=8 format=3 uid="uid://bs4t3s3hfta1d"]
+
+[ext_resource type="Script" uid="uid://cpxfyumawb8si" path="res://src/manual_testing.gd" id="1_ux8pb"]
+[ext_resource type="Script" uid="uid://6k7wpjtrgv46" path="res://src/delta_stopwatch.gd" id="2_v42bh"]
+[ext_resource type="Script" uid="uid://bthexdviv8jxx" path="res://src/timestamp_stopwatch.gd" id="3_b51cg"]
+
+[sub_resource type="LabelSettings" id="LabelSettings_7ayir"]
+font_size = 40
+
+[sub_resource type="LabelSettings" id="LabelSettings_ux8pb"]
+font_size = 25
+
+[sub_resource type="LabelSettings" id="LabelSettings_u5erm"]
+font_color = Color(0.807295, 0.807296, 0.807295, 1)
+
+[sub_resource type="LabelSettings" id="LabelSettings_2x4v2"]
+font_color = Color(0.756508, 0.756508, 0.756508, 1)
+
+[node name="ManualTesting" type="Control" node_paths=PackedStringArray("timestamp_stopwatch_label", "delta_stopwatch_label", "difference_label", "timestamp_stopwatch", "delta_stopwatch")]
+layout_mode = 3
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+script = ExtResource("1_ux8pb")
+timestamp_stopwatch_label = NodePath("ContentVBox/ButtonsAndStatsHBox/LabelsVBoxContainer/TimestampStopwatchLabel")
+delta_stopwatch_label = NodePath("ContentVBox/ButtonsAndStatsHBox/LabelsVBoxContainer/DeltaStopwatchLabel")
+difference_label = NodePath("ContentVBox/ButtonsAndStatsHBox/LabelsVBoxContainer/DifferenceLabel")
+timestamp_stopwatch = NodePath("TimestampStopwatch")
+delta_stopwatch = NodePath("DeltaStopwatch")
+
+[node name="TimestampStopwatch" type="Node2D" parent="."]
+script = ExtResource("3_b51cg")
+
+[node name="DeltaStopwatch" type="Node2D" parent="."]
+script = ExtResource("2_v42bh")
+
+[node name="ContentVBox" type="VBoxContainer" parent="."]
+layout_mode = 1
+anchors_preset = 8
+anchor_left = 0.5
+anchor_top = 0.5
+anchor_right = 0.5
+anchor_bottom = 0.5
+offset_left = -310.0
+offset_top = -247.0
+offset_right = 310.0
+offset_bottom = 247.0
+grow_horizontal = 2
+grow_vertical = 2
+theme_override_constants/separation = 30
+
+[node name="TitleLabel" type="Label" parent="ContentVBox"]
+layout_mode = 2
+text = "Stopwatch comparison"
+label_settings = SubResource("LabelSettings_7ayir")
+horizontal_alignment = 1
+
+[node name="ButtonsAndStatsHBox" type="HBoxContainer" parent="ContentVBox"]
+layout_mode = 2
+theme_override_constants/separation = 20
+
+[node name="ButtonsVBoxContainer" type="VBoxContainer" parent="ContentVBox/ButtonsAndStatsHBox"]
+custom_minimum_size = Vector2(200, 200)
+layout_mode = 2
+size_flags_horizontal = 3
+
+[node name="StartButton" type="Button" parent="ContentVBox/ButtonsAndStatsHBox/ButtonsVBoxContainer"]
+layout_mode = 2
+size_flags_vertical = 3
+text = "Start"
+
+[node name="StopButton" type="Button" parent="ContentVBox/ButtonsAndStatsHBox/ButtonsVBoxContainer"]
+layout_mode = 2
+size_flags_vertical = 3
+text = "Stop"
+
+[node name="ResetButton" type="Button" parent="ContentVBox/ButtonsAndStatsHBox/ButtonsVBoxContainer"]
+layout_mode = 2
+size_flags_vertical = 3
+text = "Reset"
+
+[node name="LabelsVBoxContainer" type="VBoxContainer" parent="ContentVBox/ButtonsAndStatsHBox"]
+layout_mode = 2
+
+[node name="TimestampStopwatchLabel" type="Label" parent="ContentVBox/ButtonsAndStatsHBox/LabelsVBoxContainer"]
+layout_mode = 2
+text = "Timestamp stopwatch time:  0ms"
+label_settings = SubResource("LabelSettings_ux8pb")
+
+[node name="DeltaStopwatchLabel" type="Label" parent="ContentVBox/ButtonsAndStatsHBox/LabelsVBoxContainer"]
+layout_mode = 2
+text = "Delta stopwatch time:            0ms"
+label_settings = SubResource("LabelSettings_ux8pb")
+
+[node name="DifferenceLabel" type="Label" parent="ContentVBox/ButtonsAndStatsHBox/LabelsVBoxContainer"]
+layout_mode = 2
+text = "Difference:                               0ms"
+label_settings = SubResource("LabelSettings_ux8pb")
+
+[node name="FrameLagVBox" type="VBoxContainer" parent="ContentVBox"]
+layout_mode = 2
+
+[node name="ButtonToggleHBox" type="HBoxContainer" parent="ContentVBox/FrameLagVBox"]
+layout_mode = 2
+
+[node name="ToggleFrameLagButton" type="CheckButton" parent="ContentVBox/FrameLagVBox/ButtonToggleHBox"]
+layout_mode = 2
+theme_override_colors/font_color = Color(1, 1, 1, 1)
+theme_override_font_sizes/font_size = 25
+text = "Toggle Frame Lag Simulation   "
+
+[node name="ContentMargin" type="MarginContainer" parent="ContentVBox/FrameLagVBox"]
+layout_mode = 2
+theme_override_constants/margin_left = 20
+theme_override_constants/margin_top = 5
+
+[node name="ContentVBox" type="VBoxContainer" parent="ContentVBox/FrameLagVBox/ContentMargin"]
+layout_mode = 2
+
+[node name="Label3" type="Label" parent="ContentVBox/FrameLagVBox/ContentMargin/ContentVBox"]
+layout_mode = 2
+text = "adds a random OS.get_ticks_msec() delay each frame"
+label_settings = SubResource("LabelSettings_u5erm")
+autowrap_mode = 3
+
+[node name="Spacing" type="Control" parent="ContentVBox/FrameLagVBox/ContentMargin/ContentVBox"]
+custom_minimum_size = Vector2(0, 10)
+layout_mode = 2
+
+[node name="Label" type="Label" parent="ContentVBox/FrameLagVBox/ContentMargin/ContentVBox"]
+layout_mode = 2
+text = "Delay each frame by:"
+
+[node name="HBoxContainer" type="HBoxContainer" parent="ContentVBox/FrameLagVBox/ContentMargin/ContentVBox"]
+layout_mode = 2
+
+[node name="LowerDelayLineEdit" type="LineEdit" parent="ContentVBox/FrameLagVBox/ContentMargin/ContentVBox/HBoxContainer"]
+layout_mode = 2
+text = "150"
+placeholder_text = "lower bound"
+
+[node name="Label" type="Label" parent="ContentVBox/FrameLagVBox/ContentMargin/ContentVBox/HBoxContainer"]
+layout_mode = 2
+text = "–"
+
+[node name="UpperDelayLineEdit" type="LineEdit" parent="ContentVBox/FrameLagVBox/ContentMargin/ContentVBox/HBoxContainer"]
+layout_mode = 2
+text = "200"
+placeholder_text = "upper bound"
+
+[node name="Label2" type="Label" parent="ContentVBox/FrameLagVBox/ContentMargin/ContentVBox/HBoxContainer"]
+custom_minimum_size = Vector2(0, 30)
+layout_mode = 2
+text = "milliseconds"
+vertical_alignment = 2
+
+[node name="Label2" type="Label" parent="ContentVBox/FrameLagVBox/ContentMargin/ContentVBox"]
+layout_mode = 2
+text = "higher range = lower FPS
+lower range = higher FPS"
+label_settings = SubResource("LabelSettings_2x4v2")
+
+[connection signal="pressed" from="ContentVBox/ButtonsAndStatsHBox/ButtonsVBoxContainer/StartButton" to="." method="_on_start_button_pressed"]
+[connection signal="pressed" from="ContentVBox/ButtonsAndStatsHBox/ButtonsVBoxContainer/StopButton" to="." method="_on_stop_button_pressed"]
+[connection signal="pressed" from="ContentVBox/ButtonsAndStatsHBox/ButtonsVBoxContainer/ResetButton" to="." method="_on_reset_button_pressed"]
+[connection signal="toggled" from="ContentVBox/FrameLagVBox/ButtonToggleHBox/ToggleFrameLagButton" to="." method="_on_toggle_frame_lag_button_toggled"]
+[connection signal="text_changed" from="ContentVBox/FrameLagVBox/ContentMargin/ContentVBox/HBoxContainer/LowerDelayLineEdit" to="." method="_on_lower_delay_line_edit_text_changed"]
+[connection signal="text_changed" from="ContentVBox/FrameLagVBox/ContentMargin/ContentVBox/HBoxContainer/UpperDelayLineEdit" to="." method="_on_upper_delay_line_edit_text_changed"]
