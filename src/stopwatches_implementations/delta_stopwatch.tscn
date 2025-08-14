@@ -1,0 +1,6 @@
+[gd_scene load_steps=2 format=3 uid="uid://dav473w544vyr"]
+
+[ext_resource type="Script" uid="uid://6k7wpjtrgv46" path="res://src/delta_stopwatch.gd" id="1_egy23"]
+
+[node name="DeltaStopwatch" type="Node"]
+script = ExtResource("1_egy23")

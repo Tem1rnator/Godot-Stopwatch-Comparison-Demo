@@ -1,0 +1,278 @@
+[gd_scene load_steps=12 format=3 uid="uid://beydjj7vrr23l"]
+
+[ext_resource type="Script" uid="uid://n76rngcxnj0l" path="res://src/game_example/game_example.gd" id="1_6pi1a"]
+[ext_resource type="Script" uid="uid://bds07siwvynwr" path="res://src/game_example/player.gd" id="1_djxn2"]
+[ext_resource type="Texture2D" uid="uid://cyy8x50rvvres" path="res://src/icon.svg" id="2_2p4ja"]
+[ext_resource type="PackedScene" uid="uid://d3hkqaxn5pfxl" path="res://src/stopwatches_implementations/timestamp_stopwatch.tscn" id="2_n7mk1"]
+[ext_resource type="PackedScene" uid="uid://dav473w544vyr" path="res://src/stopwatches_implementations/delta_stopwatch.tscn" id="3_evyhc"]
+
+[sub_resource type="LabelSettings" id="LabelSettings_n7mk1"]
+font_size = 20
+font_color = Color(0.733005, 0.733005, 0.733005, 1)
+
+[sub_resource type="LabelSettings" id="LabelSettings_evyhc"]
+font_size = 25
+
+[sub_resource type="LabelSettings" id="LabelSettings_gugoy"]
+font_size = 20
+
+[sub_resource type="RectangleShape2D" id="RectangleShape2D_2p4ja"]
+size = Vector2(84, 84)
+
+[sub_resource type="LabelSettings" id="LabelSettings_6pi1a"]
+font_size = 30
+
+[sub_resource type="RectangleShape2D" id="RectangleShape2D_6pi1a"]
+size = Vector2(8, 127)
+
+[node name="GameExample" type="Node2D" node_paths=PackedStringArray("timestamp_stopwatch", "delta_stopwatch", "without_lag_timestamp_label", "without_lag_delta_label", "with_lag_timestamp_label", "with_lag_delta_label", "lag_difference_timestamp_label", "lag_difference_delta_label")]
+script = ExtResource("1_6pi1a")
+timestamp_stopwatch = NodePath("TimestampStopwatch")
+delta_stopwatch = NodePath("DeltaStopwatch")
+without_lag_timestamp_label = NodePath("TimesHBox/WithoutLag/MarginContainer/VBoxContainer/HBoxContainer/TimeLabels/TimestampTime")
+without_lag_delta_label = NodePath("TimesHBox/WithoutLag/MarginContainer/VBoxContainer/HBoxContainer/TimeLabels/DeltaTime")
+with_lag_timestamp_label = NodePath("TimesHBox/WithLag/MarginContainer/VBoxContainer/HBoxContainer/TimeLabels/TimestampTime")
+with_lag_delta_label = NodePath("TimesHBox/WithLag/MarginContainer/VBoxContainer/HBoxContainer/TimeLabels/DeltaTime")
+lag_difference_timestamp_label = NodePath("TimesHBox/LagDiffernces/MarginContainer/VBoxContainer/HBoxContainer/TimeLabels/TimestampTime")
+lag_difference_delta_label = NodePath("TimesHBox/LagDiffernces/MarginContainer/VBoxContainer/HBoxContainer/TimeLabels/DeltaTime")
+
+[node name="TimestampStopwatch" parent="." instance=ExtResource("2_n7mk1")]
+
+[node name="DeltaStopwatch" parent="." instance=ExtResource("3_evyhc")]
+
+[node name="Camera2D" type="Camera2D" parent="."]
+position = Vector2(491, 0)
+position_smoothing_enabled = true
+
+[node name="InstructionsLabel" type="Label" parent="."]
+offset_left = -60.0
+offset_top = -312.0
+offset_right = 175.0
+offset_bottom = -222.0
+text = "Controls: WASD
+Cross finish line
+Try with and without lag"
+label_settings = SubResource("LabelSettings_n7mk1")
+
+[node name="SimulateLagCheckButton" type="CheckButton" parent="."]
+offset_left = 47.0
+offset_top = 57.0
+offset_right = 571.0
+offset_bottom = 107.0
+theme_override_constants/h_separation = 10
+theme_override_font_sizes/font_size = 30
+text = "Simulate lag during next race (~5FPS):"
+expand_icon = true
+
+[node name="TimesHBox" type="HBoxContainer" parent="."]
+offset_left = -23.0
+offset_top = 131.0
+offset_right = 1028.0
+offset_bottom = 240.0
+theme_override_constants/separation = 10
+
+[node name="WithoutLag" type="PanelContainer" parent="TimesHBox"]
+layout_mode = 2
+size_flags_horizontal = 3
+
+[node name="MarginContainer" type="MarginContainer" parent="TimesHBox/WithoutLag"]
+layout_mode = 2
+theme_override_constants/margin_left = 10
+theme_override_constants/margin_top = 5
+theme_override_constants/margin_right = 10
+theme_override_constants/margin_bottom = 5
+
+[node name="VBoxContainer" type="VBoxContainer" parent="TimesHBox/WithoutLag/MarginContainer"]
+layout_mode = 2
+
+[node name="SectionHeader" type="Label" parent="TimesHBox/WithoutLag/MarginContainer/VBoxContainer"]
+layout_mode = 2
+text = "Without lag"
+label_settings = SubResource("LabelSettings_evyhc")
+horizontal_alignment = 1
+
+[node name="HBoxContainer" type="HBoxContainer" parent="TimesHBox/WithoutLag/MarginContainer/VBoxContainer"]
+layout_mode = 2
+
+[node name="TextLabels" type="VBoxContainer" parent="TimesHBox/WithoutLag/MarginContainer/VBoxContainer/HBoxContainer"]
+layout_mode = 2
+
+[node name="TimestampText" type="Label" parent="TimesHBox/WithoutLag/MarginContainer/VBoxContainer/HBoxContainer/TextLabels"]
+layout_mode = 2
+text = "Timestamp stopwatch:"
+label_settings = SubResource("LabelSettings_gugoy")
+
+[node name="DeltaText" type="Label" parent="TimesHBox/WithoutLag/MarginContainer/VBoxContainer/HBoxContainer/TextLabels"]
+layout_mode = 2
+text = "Delta stopwatch time:"
+label_settings = SubResource("LabelSettings_gugoy")
+
+[node name="TimeLabels" type="VBoxContainer" parent="TimesHBox/WithoutLag/MarginContainer/VBoxContainer/HBoxContainer"]
+layout_mode = 2
+
+[node name="TimestampTime" type="Label" parent="TimesHBox/WithoutLag/MarginContainer/VBoxContainer/HBoxContainer/TimeLabels"]
+layout_mode = 2
+text = "0 ms"
+label_settings = SubResource("LabelSettings_gugoy")
+
+[node name="DeltaTime" type="Label" parent="TimesHBox/WithoutLag/MarginContainer/VBoxContainer/HBoxContainer/TimeLabels"]
+layout_mode = 2
+text = "0 ms"
+label_settings = SubResource("LabelSettings_gugoy")
+
+[node name="WithLag" type="PanelContainer" parent="TimesHBox"]
+layout_mode = 2
+size_flags_horizontal = 3
+
+[node name="MarginContainer" type="MarginContainer" parent="TimesHBox/WithLag"]
+layout_mode = 2
+theme_override_constants/margin_left = 10
+theme_override_constants/margin_top = 5
+theme_override_constants/margin_right = 10
+theme_override_constants/margin_bottom = 5
+
+[node name="VBoxContainer" type="VBoxContainer" parent="TimesHBox/WithLag/MarginContainer"]
+layout_mode = 2
+
+[node name="SectionHeader" type="Label" parent="TimesHBox/WithLag/MarginContainer/VBoxContainer"]
+layout_mode = 2
+text = "With lag"
+label_settings = SubResource("LabelSettings_evyhc")
+horizontal_alignment = 1
+
+[node name="HBoxContainer" type="HBoxContainer" parent="TimesHBox/WithLag/MarginContainer/VBoxContainer"]
+layout_mode = 2
+
+[node name="TextLabels" type="VBoxContainer" parent="TimesHBox/WithLag/MarginContainer/VBoxContainer/HBoxContainer"]
+layout_mode = 2
+
+[node name="TimestampText" type="Label" parent="TimesHBox/WithLag/MarginContainer/VBoxContainer/HBoxContainer/TextLabels"]
+layout_mode = 2
+text = "Timestamp stopwatch:"
+label_settings = SubResource("LabelSettings_gugoy")
+
+[node name="DeltaText" type="Label" parent="TimesHBox/WithLag/MarginContainer/VBoxContainer/HBoxContainer/TextLabels"]
+layout_mode = 2
+text = "Delta stopwatch time:"
+label_settings = SubResource("LabelSettings_gugoy")
+
+[node name="TimeLabels" type="VBoxContainer" parent="TimesHBox/WithLag/MarginContainer/VBoxContainer/HBoxContainer"]
+layout_mode = 2
+
+[node name="TimestampTime" type="Label" parent="TimesHBox/WithLag/MarginContainer/VBoxContainer/HBoxContainer/TimeLabels"]
+layout_mode = 2
+text = "0 ms"
+label_settings = SubResource("LabelSettings_gugoy")
+
+[node name="DeltaTime" type="Label" parent="TimesHBox/WithLag/MarginContainer/VBoxContainer/HBoxContainer/TimeLabels"]
+layout_mode = 2
+text = "0 ms"
+label_settings = SubResource("LabelSettings_gugoy")
+
+[node name="LagDiffernces" type="PanelContainer" parent="TimesHBox"]
+layout_mode = 2
+size_flags_horizontal = 3
+
+[node name="MarginContainer" type="MarginContainer" parent="TimesHBox/LagDiffernces"]
+layout_mode = 2
+theme_override_constants/margin_left = 10
+theme_override_constants/margin_top = 5
+theme_override_constants/margin_right = 10
+theme_override_constants/margin_bottom = 5
+
+[node name="VBoxContainer" type="VBoxContainer" parent="TimesHBox/LagDiffernces/MarginContainer"]
+layout_mode = 2
+
+[node name="SectionHeader" type="Label" parent="TimesHBox/LagDiffernces/MarginContainer/VBoxContainer"]
+layout_mode = 2
+text = "Lag differences"
+label_settings = SubResource("LabelSettings_evyhc")
+horizontal_alignment = 1
+
+[node name="HBoxContainer" type="HBoxContainer" parent="TimesHBox/LagDiffernces/MarginContainer/VBoxContainer"]
+layout_mode = 2
+
+[node name="TextLabels" type="VBoxContainer" parent="TimesHBox/LagDiffernces/MarginContainer/VBoxContainer/HBoxContainer"]
+layout_mode = 2
+
+[node name="TimestampText" type="Label" parent="TimesHBox/LagDiffernces/MarginContainer/VBoxContainer/HBoxContainer/TextLabels"]
+layout_mode = 2
+text = "For timestamp:"
+label_settings = SubResource("LabelSettings_gugoy")
+
+[node name="DeltaText" type="Label" parent="TimesHBox/LagDiffernces/MarginContainer/VBoxContainer/HBoxContainer/TextLabels"]
+layout_mode = 2
+text = "For delta:"
+label_settings = SubResource("LabelSettings_gugoy")
+
+[node name="TimeLabels" type="VBoxContainer" parent="TimesHBox/LagDiffernces/MarginContainer/VBoxContainer/HBoxContainer"]
+layout_mode = 2
+
+[node name="TimestampTime" type="Label" parent="TimesHBox/LagDiffernces/MarginContainer/VBoxContainer/HBoxContainer/TimeLabels"]
+layout_mode = 2
+text = "0 ms"
+label_settings = SubResource("LabelSettings_gugoy")
+
+[node name="DeltaTime" type="Label" parent="TimesHBox/LagDiffernces/MarginContainer/VBoxContainer/HBoxContainer/TimeLabels"]
+layout_mode = 2
+text = "0 ms"
+label_settings = SubResource("LabelSettings_gugoy")
+
+[node name="Player" type="CharacterBody2D" parent="."]
+position = Vector2(61, -57)
+script = ExtResource("1_djxn2")
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="Player"]
+shape = SubResource("RectangleShape2D_2p4ja")
+
+[node name="Icon" type="Sprite2D" parent="Player"]
+scale = Vector2(0.65625, 0.65625)
+texture = ExtResource("2_2p4ja")
+
+[node name="StartLine" type="Area2D" parent="."]
+position = Vector2(228, -31)
+
+[node name="GoalLabel" type="Label" parent="StartLine"]
+offset_left = -62.0
+offset_top = -147.0
+offset_right = 69.0
+offset_bottom = -92.0
+text = "Start line"
+label_settings = SubResource("LabelSettings_6pi1a")
+metadata/_edit_use_anchors_ = true
+
+[node name="Icon" type="Sprite2D" parent="StartLine"]
+modulate = Color(0, 0.923708, 0.0248801, 1)
+position = Vector2(0, -25.5)
+scale = Vector2(0.0625001, 0.992188)
+texture = ExtResource("2_2p4ja")
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="StartLine"]
+position = Vector2(0, -25.5)
+shape = SubResource("RectangleShape2D_6pi1a")
+
+[node name="FinishLine" type="Area2D" parent="."]
+position = Vector2(760, -31)
+
+[node name="GoalLabel" type="Label" parent="FinishLine"]
+offset_left = -62.0
+offset_top = -147.0
+offset_right = 69.0
+offset_bottom = -92.0
+text = "Finish line"
+label_settings = SubResource("LabelSettings_6pi1a")
+metadata/_edit_use_anchors_ = true
+
+[node name="Icon" type="Sprite2D" parent="FinishLine"]
+modulate = Color(0, 0.923708, 0.0248801, 1)
+position = Vector2(0, -25.5)
+scale = Vector2(0.0625001, 0.992188)
+texture = ExtResource("2_2p4ja")
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="FinishLine"]
+position = Vector2(0, -25.5)
+shape = SubResource("RectangleShape2D_6pi1a")
+
+[connection signal="toggled" from="SimulateLagCheckButton" to="." method="_on_simulate_lag_check_button_toggled"]
+[connection signal="body_entered" from="StartLine" to="." method="_on_start_line_body_entered"]
+[connection signal="body_entered" from="FinishLine" to="." method="_on_finish_line_body_entered"]

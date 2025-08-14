@@ -1,8 +1,8 @@
 [gd_scene load_steps=8 format=3 uid="uid://bs4t3s3hfta1d"]
 
-[ext_resource type="Script" uid="uid://cpxfyumawb8si" path="res://src/manual_testing.gd" id="1_ux8pb"]
-[ext_resource type="Script" uid="uid://6k7wpjtrgv46" path="res://src/delta_stopwatch.gd" id="2_v42bh"]
-[ext_resource type="Script" uid="uid://bthexdviv8jxx" path="res://src/timestamp_stopwatch.gd" id="3_b51cg"]
+[ext_resource type="Script" uid="uid://cpxfyumawb8si" path="res://src/stopwatches_comparison/manual_testing.gd" id="1_ux8pb"]
+[ext_resource type="PackedScene" uid="uid://d3hkqaxn5pfxl" path="res://src/stopwatches_implementations/timestamp_stopwatch.tscn" id="2_jyvo2"]
+[ext_resource type="PackedScene" uid="uid://dav473w544vyr" path="res://src/stopwatches_implementations/delta_stopwatch.tscn" id="3_jyvo2"]
 
 [sub_resource type="LabelSettings" id="LabelSettings_7ayir"]
 font_size = 40
@@ -30,11 +30,9 @@ difference_label = NodePath("ContentVBox/ButtonsAndStatsHBox/LabelsVBoxContainer
 timestamp_stopwatch = NodePath("TimestampStopwatch")
 delta_stopwatch = NodePath("DeltaStopwatch")
 
-[node name="TimestampStopwatch" type="Node2D" parent="."]
-script = ExtResource("3_b51cg")
+[node name="TimestampStopwatch" parent="." instance=ExtResource("2_jyvo2")]
 
-[node name="DeltaStopwatch" type="Node2D" parent="."]
-script = ExtResource("2_v42bh")
+[node name="DeltaStopwatch" parent="." instance=ExtResource("3_jyvo2")]
 
 [node name="ContentVBox" type="VBoxContainer" parent="."]
 layout_mode = 1

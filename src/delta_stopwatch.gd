@@ -1,4 +1,4 @@
-extends Node2D
+extends Node
 class_name DeltaStopwatch
 ## Delta-based stopwatch approach: using delta time accumulated via _process()
 ## Subject to inaccuracies if framerate drops significantly.

@@ -1,4 +1,4 @@
-extends Node2D
+extends Node
 class_name TimestampStopwatch
 ## Timestamp-based stopwatch approach: using the Time singleton's timestamps (microsecond precision)
 ## usec = microseconds, msec = milliseconds
